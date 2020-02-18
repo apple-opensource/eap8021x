@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017 Apple Inc. All rights reserved.
+ * Copyright (c) 2002-2018 Apple Inc. All rights reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
  * 
@@ -24,8 +24,8 @@
 #ifndef _EAP8021X_EAPCLIENTPROPERTIES_H
 #define _EAP8021X_EAPCLIENTPROPERTIES_H
 
-#include <CoreFoundation/CFString.h>
 #include <TargetConditionals.h>
+#include <CoreFoundation/CFString.h>
 
 /*
  * The type of the value corresponding to the following keys are CFString's 
@@ -92,15 +92,6 @@
 #define kEAPClientPropEAPSIMAKAEncryptedIdentityEnabled \
 	CFSTR("EAPSIMAKAEncryptedIdentityEnabled")
 
-#if TARGET_OS_EMBEDDED
-/*
- * kEAPClientPropTLSSaveTrustExceptions
- * - tells the client to save trust exceptions for the current server
- *   certificate chain, kEAPClientPropTLSUserTrustProceedCertificateChain
- */
-#define kEAPClientPropTLSSaveTrustExceptions \
-	CFSTR("TLSSaveTrustExceptions")			/* boolean (false) */
-
 /*
  * kEAPClientPropTLSTrustExceptionsDomain 
  * kEAPClientPropTLSTrustExceptionsID
@@ -111,6 +102,16 @@
 	CFSTR("TLSTrustExceptionsDomain")
 #define kEAPClientPropTLSTrustExceptionsID \
 	CFSTR("TLSTrustExceptionsID")
+
+#if TARGET_OS_IPHONE
+
+/*
+ * kEAPClientPropTLSSaveTrustExceptions
+ * - tells the client to save trust exceptions for the current server
+ *   certificate chain, kEAPClientPropTLSUserTrustProceedCertificateChain
+ */
+#define kEAPClientPropTLSSaveTrustExceptions \
+	CFSTR("TLSSaveTrustExceptions")			/* boolean (false) */
 
 /*
  * kEAPTLSTrustExceptionsDomain*
@@ -133,7 +134,8 @@
     	CFSTR("ProfileID")
 #define kEAPTLSTrustExceptionsDomainNetworkInterfaceName \
     	CFSTR("NetworkInterfaceName")
-#else /* TARGET_OS_EMBEDDED */
+
+#else /* TARGET_OS_IPHONE */
 
 /*
  * kEAPClientPropSaveCredentialsOnSuccessfulAuthentication
@@ -143,7 +145,7 @@
 #define kEAPClientPropSaveCredentialsOnSuccessfulAuthentication \
     CFSTR("SaveCredentialsOnSuccessfulAuthentication")
 
-#endif /* TARGET_OS_EMBEDDED */
+#endif /* TARGET_OS_IPHONE */
 
 #define kEAPClientPropTLSVerifyServerCertificate \
 	CFSTR("TLSVerifyServerCertificate") 		/* boolean (true) */
@@ -201,6 +203,7 @@
 #define kEAPClientPropTLSClientIdentityTrustChain   CFSTR("TLSClientIdentityTrustChain") /* array */
 #define kEAPClientPropTLSMinimumVersion		    CFSTR("TLSMinimumVersion") /* string (kEAPTLSVersion*) */
 #define kEAPClientPropTLSMaximumVersion		    CFSTR("TLSMaximumVersion") /* string (kEAPTLSVersion*) */
+#define kEAPClientPropTLSShareableIdentityInfo	    CFSTR("TLSShareableIdentityInfo") /* Dictionary */
 
 /* acceptable values for TLs version */
 #define kEAPTLSVersion1_0			CFSTR("1.0")
@@ -247,7 +250,8 @@
 #define kEAPClientPropTLSAllowAnyRoot \
 	CFSTR("TLSAllowAnyRoot") 			/* boolean (false) */
 
-#if TARGET_OS_EMBEDDED
+#if TARGET_OS_IPHONE
+
 /*
  * kEAPClientPropTLSAllowTrustExceptions
  * - this property is no longer consulted
@@ -257,7 +261,8 @@
  */
 #define kEAPClientPropTLSAllowTrustExceptions \
 	CFSTR("TLSAllowTrustExceptions") 		/* boolean (see above) */
-#else /* TARGET_OS_EMBEDDED */
+
+#else /* TARGET_OS_IPHONE */
 /*
  * kEAPClientPropTLSAllowTrustDecisions
  * - this property is no longer consulted
@@ -267,6 +272,7 @@
  */
 #define kEAPClientPropTLSAllowTrustDecisions \
 	CFSTR("TLSAllowTrustDecisions")		/* boolean (see above) */
-#endif /* TARGET_OS_EMBEDDED */
+
+#endif /* TARGET_OS_IPHONE */
 
 #endif /* _EAP8021X_EAPCLIENTPROPERTIES_H */

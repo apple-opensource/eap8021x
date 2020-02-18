@@ -21,39 +21,41 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef _EAP8021X_SIMACCESS_PRIVATE_H
-#define _EAP8021X_SIMACCESS_PRIVATE_H
+#ifndef _EAP8021X_EAPCLIENTPLUGIN_INTROSPECT_H
+#define _EAP8021X_EAPCLIENTPLUGIN_INTROSPECT_H
 
-#include <CoreFoundation/CFString.h>
-#include <CoreFoundation/CFRunLoop.h>
-#include "EAPSIMAKA.h"
+typedef void * (*EAPClientPluginFuncRef)();
 
-#if TARGET_OS_IPHONE
+typedef const char * EAPClientPluginFuncName;
 
-CFStringRef
-_SIMCopyIMSI(CFDictionaryRef properties);
+EAPClientPluginFuncRef
+md5_introspect(EAPClientPluginFuncName name);
 
-CFStringRef
-_SIMCopyRealm(CFDictionaryRef properties);
+EAPClientPluginFuncRef
+leap_introspect(EAPClientPluginFuncName name);
 
-CFDictionaryRef
-_SIMCopyEncryptedIMSIInfo(EAPType type);
+EAPClientPluginFuncRef
+eaptls_introspect(EAPClientPluginFuncName name);
 
-void
-_SIMReportDecryptionError(CFDataRef encryptedIdentity);
+EAPClientPluginFuncRef
+eapttls_introspect(EAPClientPluginFuncName name);
 
-CFDictionaryRef
-_SIMCreateAuthResponse(CFStringRef slotUUID, CFDictionaryRef auth_params);
+EAPClientPluginFuncRef
+peap_introspect(EAPClientPluginFuncName name);
 
-typedef void (*SIMAccessConnectionCallback)(CFTypeRef connection, CFStringRef status, void* info);
+EAPClientPluginFuncRef
+eapmschapv2_introspect(EAPClientPluginFuncName name);
 
-CFTypeRef
-_SIMAccessConnectionCreate(void);
+EAPClientPluginFuncRef
+eapgtc_introspect(EAPClientPluginFuncName name);
 
-void
-_SIMAccessConnectionRegisterForNotification(CFTypeRef connection, SIMAccessConnectionCallback callback, void *info, CFRunLoopRef runLoop,
-					    CFStringRef runLoopMode);
+EAPClientPluginFuncRef
+eapfast_introspect(EAPClientPluginFuncName name);
 
-#endif /* TARGET_OS_IPHONE */
+EAPClientPluginFuncRef
+eapsim_introspect(EAPClientPluginFuncName name);
 
-#endif /* _EAP8021X_SIMACCESS_PRIVATE_H */
+EAPClientPluginFuncRef
+eapaka_introspect(EAPClientPluginFuncName name);
+
+#endif /* _EAP8021X_EAPCLIENTPLUGIN_INTROSPECT_H */
